@@ -2,16 +2,21 @@ version: 1
 frontend:
   phases:
     # Specifies the build configuration for the frontend
+    preBuild:
+      commands:
+        - echo "Installing dependencies..."
+        - npm install
     build:
       commands:
-        - npm install
+        - echo "Building the project..."
         - npm run build
   artifacts:
     # Defines the build output directory and files to be uploaded
-    baseDirectory: build
+    baseDirectory: public
     files:
       - '**/*'
   cache:
     # Configures caching behavior to speed up build time
     paths:
       - node_modules/**/*
+      - public/index.html
