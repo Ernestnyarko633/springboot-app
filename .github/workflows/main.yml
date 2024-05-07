@@ -1,31 +1,23 @@
-version: 1
-backend:
-  phases:
-    build:
-      commands:
-        - echo "No backend build steps required for a Spring Boot application"
-  artifacts:
-    baseDirectory: target
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - ~/.m2/repository/**/*
-      
-deploy:
-  artifacts:
-    baseDirectory: target
-    files:
-      - '**/*'
-  backend:
-    phases:
-      build:
-        commands:
-          - echo "No backend build steps required for a Spring Boot application"
-    artifacts:
-      baseDirectory: target
-      files:
-        - '**/*'
-  cache:
-    paths:
-      - ~/.m2/repository/**/*
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Amplify CLI
+        run: npm install -g @aws-amplify/cli
+
+      - name: Configure AWS credentials
+        run: amplify configure
+
+      - name: Deploy to Amplify
+        run: amplify publish
