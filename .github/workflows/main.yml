@@ -1,9 +1,9 @@
 version: 1
-frontend:
+backend:
   phases:
     build:
       commands:
-        - echo "No frontend build steps required for a Spring Boot application"
+        - echo "No backend build steps required for a Spring Boot application"
   artifacts:
     baseDirectory: target
     files:
@@ -14,22 +14,15 @@ frontend:
       
 deploy:
   artifacts:
-    # Specifies the build output directory and files to be uploaded
     baseDirectory: target
     files:
       - '**/*'
   backend:
     phases:
-      # Specifies the build configuration for the backend
       build:
         commands:
           - echo "No backend build steps required for a Spring Boot application"
     artifacts:
-      # Defines the build output directory and files to be uploaded
       baseDirectory: target
       files:
-        - '**/*'
-  cache:
-    # Configures caching behavior to speed up build time
-    paths:
-      - ~/.m2/repository/**/*
+        - '**
