@@ -1,28 +1,35 @@
-name: Deploy to AWS Amplify
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build
-
-    - name: Deploy to Amplify
-      run: amplify publish
-      env:
-        AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
-        # AMPLIFY_API_ID: ${{ secrets.AMPLIFY_API_ID }}
-        # AMPLIFY_BRANCH: ${{ secrets.AMPLIFY_BRANCH }}
-        # AMPLIFY_TOKEN: ${{ secrets.AMPLIFY_TOKEN }}
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - echo "No frontend build steps required for a Spring Boot application"
+  artifacts:
+    baseDirectory: target
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - ~/.m2/repository/**/*
+      
+deploy:
+  artifacts:
+    # Specifies the build output directory and files to be uploaded
+    baseDirectory: target
+    files:
+      - '**/*'
+  backend:
+    phases:
+      # Specifies the build configuration for the backend
+      build:
+        commands:
+          - echo "No backend build steps required for a Spring Boot application"
+    artifacts:
+      # Defines the build output directory and files to be uploaded
+      baseDirectory: target
+      files:
+        - '**/*'
+  cache:
+    # Configures caching behavior to speed up build time
+    paths:
+      - ~/.m2/repository/**/*
