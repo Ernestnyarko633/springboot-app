@@ -25,4 +25,7 @@ deploy:
     artifacts:
       baseDirectory: target
       files:
-        - '**
+        - '**/*'
+  cache:
+    paths:
+      - ~/.m2/repository/**/*
